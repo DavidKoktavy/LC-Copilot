@@ -1,0 +1,36 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test-and-eval:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        python: ["3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+      - run: pip install -e ".[dev]"
+      - name: Lint
+        run: ruff check src tests evals scripts
+      - name: Unit + integration tests (API, LangGraph, MCP over stdio)
+        run: pytest
+      - name: Eval regression gate
+        run: python -m evals.run --gate
+      - name: Publish eval report
+        if: always()
+        run: cat evals/reports/latest.md >> "$GITHUB_STEP_SUMMARY"
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: eval-report-${{ matrix.python }}
+          path: |
+            evals/reports/
+            runs/traces.jsonl
