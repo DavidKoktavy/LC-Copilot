@@ -1,5 +1,7 @@
 # LC Copilot
 
+[![ci](https://github.com/DavidKoktavy/LC-Copilot/actions/workflows/ci.yml/badge.svg)](https://github.com/DavidKoktavy/LC-Copilot/actions/workflows/ci.yml) ![python](https://img.shields.io/badge/python-3.11%20%7C%203.12-blue) ![license](https://img.shields.io/badge/license-MIT-green)
+
 **A grounded Talk2Document + Talk2Data agent for trade finance.** Ask questions about letters of credit, presentations, discrepancies and bank policy, and get answers that cite their sources, never invent a number, never touch PII, and never send anything without a human signing off.
 
 Built with LangGraph, FastAPI and MCP. Runs fully offline with zero API keys (`pytest` and the eval gate pass in CI). Switch on Azure OpenAI, Azure AI Search, Document Intelligence and Content Safety with environment variables.
@@ -65,7 +67,7 @@ The same `ToolRegistry` (typed contracts, scopes, rate limits, timeouts, idempot
 ## Quickstart
 
 ```bash
-git clone https://github.com/<you>/lc-copilot && cd lc-copilot
+git clone https://github.com/DavidKoktavy/LC-Copilot && cd LC-Copilot
 python -m venv .venv && source .venv/bin/activate
 pip install -e ".[dev]"
 
